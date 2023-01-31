@@ -14,19 +14,36 @@ app.use(express.json());
 
 
 
-
-
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.twtll.mongodb.net/?retryWrites=true&w=majority`;
+// this is from the Mongodb.
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ppcaliy.mongodb.net/?retryWrites=true&w=majority`;
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
 
-console.log(uri)
 
+ //Crud operation start--
+
+async function run() {
+   try {
+       const serviceCollection = client.db('geniusCar').collection('services');
+
+       // database ar services gulo ak sathe paoya ---
+       app.get('/services', async (req, res) => {
+           const query = {}
+           const cursor = serviceCollection.find(query);
+           const services = await cursor.toArray();
+           res.send(services);
+       });
+
+      
+
+   }
+   finally {
+
+   }
+
+}
+
+run().catch(err => console.error(err));
 
 
 app.get('/', (req, res) => {
@@ -36,11 +53,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
    console.log(`Genius Car server running on ${port}`);
 })
-
-
-
-//*************************************************** */
-// ok this is the basic setup of node express server.
-//*************************************************** */
-
-
