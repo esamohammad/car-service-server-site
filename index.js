@@ -26,6 +26,11 @@ async function run() {
    try {
       const serviceCollection = client.db('geniusCar').collection('services');
 
+      //orders api---
+      const orderCollection = client.db('geniusCar').collection('orders');
+
+
+
       // database ar services gulo ak sathe paoya ---
       app.get('/services', async (req, res) => {
          const query = {}
@@ -33,6 +38,10 @@ async function run() {
          const services = await cursor.toArray();
          res.send(services);
       });
+
+
+
+
 
 
       // specific service get api ---(( ID ))
@@ -47,6 +56,14 @@ async function run() {
 
 
 
+
+
+      // orders api
+      app.post('/orders', async (req, res) => {
+         const order = req.body;
+         const result = await orderCollection.insertOne(order);
+         res.send(result);
+      })
 
 
 
