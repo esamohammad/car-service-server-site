@@ -31,6 +31,14 @@ async function run() {
 
 
 
+
+      app.post('/jwt', (req, res) => {
+         const user = req.body;
+         console.log(user);
+      })
+
+
+
       // database ar services gulo ak sathe paoya ---
       app.get('/services', async (req, res) => {
          const query = {}
